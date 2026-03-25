@@ -1,0 +1,156 @@
+{
+  "id": "building-basics",
+  "title": "Building Basics",
+  "description": "Master the art of construction in Minecraft! From cozy houses to towering skyscrapers, bridges, and beautiful gardens.",
+  "author": "CraftMind",
+  "lessons": [
+    {
+      "id": "bb-house",
+      "title": "Lesson 1: Your First House",
+      "description": "Everyone needs shelter! Let's build a cozy starter house with walls, a roof, windows, and a door.",
+      "objectives": ["Lay out a foundation", "Build 4 walls with an opening for a door", "Add a pitched roof", "Place windows and a door"],
+      "prerequisites": [],
+      "difficulty": 1,
+      "estimatedMinutes": 15,
+      "steps": [
+        { "type": "navigate_to", "description": "Walk to the building site at the village square", "target": { "x": 0, "y": 64, "z": 0 } },
+        { "type": "observe", "description": "Look at the blueprint signs — they show a top-down view of the house layout" },
+        { "type": "build_block", "description": "Lay a 7×5 foundation of oak planks (7 wide, 5 deep)" },
+        { "type": "build_block", "description": "Build 4-block-high walls on the foundation using cobblestone — leave a 2-block gap in the front for the door" },
+        { "type": "build_block", "description": "Add oak log pillars at each corner for structural detail" },
+        { "type": "build_block", "description": "Build a roof using stairs — place them on the top of the walls sloping upward to a ridge line" },
+        { "type": "build_block", "description": "Place glass panes in 2 of the walls for windows, and an oak door in the front gap" },
+        { "type": "complete_challenge", "description": "Decorate the inside! Add a crafting table, furnace, and a bed. Make it feel like home! 🏠" }
+      ],
+      "quiz": [
+        {
+          "question": "What block is commonly used for house foundations in Minecraft?",
+          "type": "multiple_choice",
+          "options": ["Dirt", "Oak planks", "Glass", "Sand"],
+          "answer": "Oak planks",
+          "explanation": "Oak planks (or any wooden planks) are a classic foundation material — they look clean, are easy to get, and match most building styles."
+        },
+        {
+          "question": "How do you make glass panes?",
+          "type": "open_ended",
+          "answer": ["smelt", "sand", "furnace"],
+          "explanation": "Smelt sand in a furnace to get glass, then place 6 glass blocks in the crafting table (2 rows of 3) to make 16 glass panes."
+        },
+        {
+          "question": "What's the minimum interior height for a comfortable house?",
+          "type": "multiple_choice",
+          "options": ["2 blocks", "3 blocks", "4 blocks", "5 blocks"],
+          "answer": "3 blocks",
+          "explanation": "3 blocks high gives you room to walk (2 blocks) plus headroom. Any less and you can't jump or place blocks overhead. 4 blocks feels spacious!"
+        }
+      ]
+    },
+    {
+      "id": "bb-tower",
+      "title": "Lesson 2: Tower Building",
+      "description": "Reach for the sky! Build a sturdy watchtower with multiple floors and a lookout platform.",
+      "objectives": ["Build a tall pillar structure", "Add multiple floors with ladders", "Create a lookout platform at the top", "Use different materials for visual interest"],
+      "prerequisites": ["bb-house"],
+      "difficulty": 2,
+      "estimatedMinutes": 20,
+      "steps": [
+        { "type": "navigate_to", "description": "Head to the tower construction yard", "target": { "x": 20, "y": 64, "z": 0 } },
+        { "type": "observe", "description": "Study the tower model — notice the stone brick base, alternating stone and wood, and the overhanging top" },
+        { "type": "build_block", "description": "Build a 5×5 base, 4 blocks high, using stone bricks" },
+        { "type": "build_block", "description": "Continue upward with oak logs at corners and cobblestone walls for 4 more blocks (total 8 high)" },
+        { "type": "build_block", "description": "Add ladders on one interior wall for access to all floors" },
+        { "type": "build_block", "description": "Create a lookout platform at the top: extend the walls 1 block outward, add fence railings, and place torches" },
+        { "type": "complete_challenge", "description": "Add a banner or flag at the very top of your tower! Make it uniquely yours! 🏰" }
+      ],
+      "quiz": [
+        {
+          "question": "Why do builders alternate between different block types in towers?",
+          "type": "multiple_choice",
+          "options": ["It's stronger", "It looks better (visual contrast)", "It's cheaper", "It's required by the game"],
+          "answer": "It looks better (visual contrast)",
+          "explanation": "Mixing materials like stone and wood creates visual bands and contrast that make buildings look more interesting and realistic."
+        },
+        {
+          "question": "What's the purpose of fence railings on a tower top?",
+          "type": "open_ended",
+          "answer": ["safety", "fall", "prevent", "protect"],
+          "explanation": "Fence railings prevent you (and other entities) from falling off the edge. In survival, a fall from a tall tower can be fatal!"
+        }
+      ]
+    },
+    {
+      "id": "bb-bridge",
+      "title": "Lesson 3: Bridge Construction",
+      "description": "Connect two points with a beautiful bridge! Learn about spans, support pillars, and arches.",
+      "objectives": ["Plan a bridge path between two points", "Build support pillars", "Construct the bridge deck", "Add railings and lighting"],
+      "prerequisites": ["bb-house"],
+      "difficulty": 2,
+      "estimatedMinutes": 15,
+      "steps": [
+        { "type": "navigate_to", "description": "Go to the canyon crossing site", "target": { "x": 0, "y": 64, "z": 20 } },
+        { "type": "observe", "description": "Look at the canyon — notice the two cliff edges. Your bridge will span this gap!" },
+        { "type": "build_block", "description": "Build stone pillar supports every 5 blocks along the bridge path, extending down to the water level" },
+        { "type": "build_block", "description": "Lay the bridge deck using spruce planks — make it 3 blocks wide for comfortable walking" },
+        { "type": "build_block", "description": "Add oak fence railings on both sides of the bridge" },
+        { "type": "build_block", "description": "Place lanterns or torches on the support pillars for night-time visibility" },
+        { "type": "complete_challenge", "description": "Add decorative arches under the bridge using stone stairs! Make it look like a Roman aqueduct! 🌉" }
+      ],
+      "quiz": [
+        {
+          "question": "How far apart should support pillars be on a bridge?",
+          "type": "multiple_choice",
+          "options": ["Every block", "Every 3-5 blocks", "Every 10 blocks", "Only at the ends"],
+          "answer": "Every 3-5 blocks",
+          "explanation": "Supports every 3-5 blocks keep the bridge looking sturdy and realistic. Too few and it looks flimsy; too many and it's cluttered."
+        },
+        {
+          "question": "What block type is ideal for underwater bridge supports?",
+          "type": "open_ended",
+          "answer": ["stone", "cobblestone", "prismarine"],
+          "explanation": "Stone, cobblestone, or prismarine are great for underwater supports — they don't wash away like sand or gravel, and prismarine fits the water theme perfectly."
+        }
+      ]
+    },
+    {
+      "id": "bb-garden",
+      "title": "Lesson 4: Garden Design",
+      "description": "Create a beautiful garden with paths, flowers, trees, and a water feature. Landscaping mastery awaits!",
+      "objectives": ["Plan a garden layout with paths", "Plant flowers and decorative plants", "Add a small pond or fountain", "Use lighting for ambiance"],
+      "prerequisites": ["bb-house"],
+      "difficulty": 1,
+      "estimatedMinutes": 15,
+      "steps": [
+        { "type": "navigate_to", "description": "Walk to the garden plot behind the village", "target": { "x": 0, "y": 64, "z": -20 } },
+        { "type": "observe", "description": "Look at the garden plan laid out with colored wool — each color represents a different zone" },
+        { "type": "build_block", "description": "Create winding paths using gravel or coarse dirt — make them curve naturally, not straight lines!" },
+        { "type": "build_block", "description": "Plant flower beds along the paths: mix different flowers (roses, daisies, tulips) for variety" },
+        { "type": "build_block", "description": "Add oak and birch trees at planned positions — vary the heights for a natural look" },
+        { "type": "build_block", "description": "Dig a small pond (4×4, 1 deep), line with prismarine, and fill with water using a water bucket" },
+        { "type": "build_block", "description": "Place sea lanterns or glowstone around the garden and under the water for magical night lighting" },
+        { "type": "complete_challenge", "description": "Add a bench (slabs + stairs), a small gazebo, or anything else that makes this garden special! 🌸" }
+      ],
+      "quiz": [
+        {
+          "question": "Why do garden paths usually curve instead of going straight?",
+          "type": "multiple_choice",
+          "options": ["Curves are easier to build", "Curves look more natural and inviting", "Straight paths don't work in Minecraft", "Curves save blocks"],
+          "answer": "Curves look more natural and inviting",
+          "explanation": "In real landscaping and in Minecraft, curved paths look organic and invite exploration. Straight lines feel rigid and artificial — save those for roads!"
+        },
+        {
+          "question": "What's a good way to make trees look natural in a garden?",
+          "type": "multiple_choice",
+          "options": ["Plant them in a perfect grid", "Vary heights and spacing randomly", "Only use one tree type", "Remove all leaves"],
+          "answer": "Vary heights and spacing randomly",
+          "explanation": "Nature is messy! Varying tree heights, spacing them unevenly, and mixing tree types (oak + birch + spruce) creates a much more realistic and appealing garden."
+        },
+        {
+          "question": "What block emits light underwater?",
+          "type": "open_ended",
+          "answer": ["sea lantern", "glowstone", "jack o lantern"],
+          "explanation": "Sea lanterns and glowstone both emit light underwater, creating a beautiful glowing pond effect. Sea lanterns have a softer, more elegant glow."
+        }
+      ]
+    }
+  ]
+}

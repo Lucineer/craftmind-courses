@@ -1,0 +1,172 @@
+{
+  "id": "survival-101",
+  "title": "Survival 101",
+  "description": "Your first day in a new world! Learn essential survival skills from crafting tools to farming — everything you need to thrive.",
+  "author": "CraftMind",
+  "lessons": [
+    {
+      "id": "sv-tools",
+      "title": "Lesson 1: Crafting Your First Tools",
+      "description": "Punching trees with your bare hands? Let's fix that! Learn the crafting recipes for every essential tool.",
+      "objectives": ["Gather wood and make planks", "Craft a crafting table and sticks", "Make wooden, then stone tools", "Understand tool tiers and durability"],
+      "prerequisites": [],
+      "difficulty": 1,
+      "estimatedMinutes": 10,
+      "steps": [
+        { "type": "navigate_to", "description": "Walk to the crafting tutorial area near spawn", "target": { "x": 5, "y": 64, "z": 5 } },
+        { "type": "observe", "description": "Look at the giant crafting recipes displayed on the wall — each shows a tool pattern" },
+        { "type": "build_block", "description": "Punch 3 oak logs from the marked trees, then convert them to 12 oak planks in your inventory" },
+        { "type": "build_block", "description": "Craft a crafting table from 4 planks, place it down, and use it to make 8 sticks" },
+        { "type": "build_block", "description": "Craft a wooden pickaxe (3 planks + 2 sticks), then mine 11 cobblestone to upgrade to stone tools" },
+        { "type": "build_block", "description": "Craft stone versions of: pickaxe, axe, sword, and shovel. Arrange them in your hotbar!" },
+        { "type": "complete_challenge", "description": "Speed challenge: craft a full set of stone tools from scratch as fast as you can! ⛏️" }
+      ],
+      "quiz": [
+        {
+          "question": "What's the first thing you should craft after getting wood?",
+          "type": "multiple_choice",
+          "options": ["A sword", "A crafting table", "A furnace", "A chest"],
+          "answer": "A crafting table",
+          "explanation": "The crafting table unlocks nearly every recipe in the game! Without it, you're limited to the 2×2 crafting grid in your inventory."
+        },
+        {
+          "question": "How many planks do you get from 1 log?",
+          "type": "multiple_choice",
+          "options": ["2", "4", "6", "8"],
+          "answer": "4",
+          "explanation": "Each oak log converts to 4 oak planks. So 3 logs = 12 planks — enough for a crafting table (4), 8 sticks (8), and a wooden pickaxe (3)."
+        },
+        {
+          "question": "Which tool tier is fastest for mining stone?",
+          "type": "open_ended",
+          "answer": ["stone", "stone pickaxe", "iron", "diamond"],
+          "explanation": "Stone pickaxes (and above) can actually mine stone, cobblestone, and ores. Wooden and gold pickaxes are too slow or can't mine certain blocks at all!"
+        }
+      ]
+    },
+    {
+      "id": "sv-shelter",
+      "title": "Lesson 2: Finding & Building Shelter",
+      "description": "Night falls fast and the monsters come out! Learn to find or build shelter quickly before the first night.",
+      "objectives": ["Identify natural shelter options", "Build a quick dirt hut in under 2 minutes", "Add a door and basic lighting", "Understand mob spawning rules"],
+      "prerequisites": ["sv-tools"],
+      "difficulty": 1,
+      "estimatedMinutes": 10,
+      "steps": [
+        { "type": "navigate_to", "description": "Explore the area around spawn to find shelter candidates", "target": { "x": -10, "y": 64, "z": 0 } },
+        { "type": "observe", "description": "Look at the three shelter options demonstrated: a hillside dig-in, a tree platform, and a small hut" },
+        { "type": "build_block", "description": "Choose one spot and build a 3×3×3 dirt hut — it doesn't need to be pretty, it needs to be FAST!" },
+        { "type": "build_block", "description": "Add an oak door to your hut and place a torch inside (prevents mob spawns)" },
+        { "type": "interact_npc", "description": "Talk to ProfBlock about which shelter type is best for different situations" },
+        { "type": "complete_challenge", "description": "Improve your hut: replace dirt walls with cobblestone, add a window, and make it feel cozy! 🏡" }
+      ],
+      "quiz": [
+        {
+          "question": "What light level prevents hostile mobs from spawning?",
+          "type": "multiple_choice",
+          "options": ["0", "4", "7", "14"],
+          "answer": "7",
+          "explanation": "Hostile mobs require a light level of 7 or darker to spawn. Torches produce light level 14, so placing one every 7 blocks keeps everything lit!"
+        },
+        {
+          "question": "Which mobs can break down wooden doors?",
+          "type": "multiple_choice",
+          "options": ["Zombies", "Creepers", "Skeletons", "Spiders"],
+          "answer": "Zombies",
+          "explanation": "Zombies on Hard difficulty can break down wooden doors! On Normal they'll bang on them but can't break through. Use iron doors for extra safety."
+        },
+        {
+          "question": "What's the fastest shelter you can build on day 1?",
+          "type": "open_ended",
+          "answer": ["dirt hut", "dirt", "hole", "dig", "cave"],
+          "explanation": "A dirt hut or a hole dug into a hillside is the fastest shelter — no crafting required! Just pile up dirt blocks or dig 3 blocks into a cliff face."
+        }
+      ]
+    },
+    {
+      "id": "sv-night",
+      "title": "Lesson 3: Surviving the First Night",
+      "description": "The sun is setting. Do you know what to do? Learn the dangers of night and how to stay alive until dawn.",
+      "objectives": ["Recognize hostile mobs and their threats", "Learn basic combat techniques", "Know when to fight vs when to hide", "Set up safe overnight routines"],
+      "prerequisites": ["sv-shelter"],
+      "difficulty": 2,
+      "estimatedMinutes": 15,
+      "steps": [
+        { "type": "navigate_to", "description": "Enter the night simulation arena", "target": { "x": 10, "y": 64, "z": -10 } },
+        { "type": "observe", "description": "Watch the mob showcase — each hostile mob is displayed behind glass with a sign explaining its behavior" },
+        { "type": "solve_puzzle", "description": "Zombie combat practice: fight 3 zombies in the arena using your sword. Strafe and attack!" },
+        { "type": "solve_puzzle", "description": "Skeleton practice: skeletons shoot arrows! Use blocks as cover, then rush in close" },
+        { "type": "interact_npc", "description": "Discuss creeper safety with ProfBlock — learn the 4-block safe distance rule" },
+        { "type": "complete_challenge", "description": "Survive the full night simulation (5 minutes) in the arena! You've got this! 🌙" }
+      ],
+      "quiz": [
+        {
+          "question": "What's the safest distance from a creeper before its explosion won't hurt you?",
+          "type": "multiple_choice",
+          "options": ["1 block", "4 blocks", "8 blocks", "16 blocks"],
+          "answer": "4 blocks",
+          "explanation": "A creeper's explosion has a blast radius of about 3-4 blocks. If you're 5+ blocks away when it detonates, you'll take little to no damage. Sprint away!"
+        },
+        {
+          "question": "Which mob drops an item useful for brewing?",
+          "type": "open_ended",
+          "answer": ["spider", "blaze", "creeper", "skeleton", "witch"],
+          "explanation": "Spiders drop spider eyes (for potions of poison), creepers drop gunpowder (for splash potions and fire charges), skeletons drop bones (for bone meal). Blazes drop blaze rods — essential for brewing!"
+        },
+        {
+          "question": "What should you do if you see a skeleton at night with no weapons?",
+          "type": "multiple_choice",
+          "options": ["Charge at it", "Run away and hide", "Try to punch it", "Stand still"],
+          "answer": "Run away and hide",
+          "explanation": "Without a weapon, skeletons will shoot you full of arrows! Your best option is to sprint away and get behind cover or into shelter."
+        }
+      ]
+    },
+    {
+      "id": "sv-farming",
+      "title": "Lesson 4: Farming Fundamentals",
+      "description": "Hunting is unpredictable — farming is forever! Learn to grow wheat, carrots, and breed animals for a reliable food supply.",
+      "objectives": ["Till soil and plant seeds", "Understand hydration and crop growth", "Set up automatic watering with water channels", "Breed animals for renewable food"],
+      "prerequisites": ["sv-tools"],
+      "difficulty": 1,
+      "estimatedMinutes": 15,
+      "steps": [
+        { "type": "navigate_to", "description": "Walk to the farm plots near the river", "target": { "x": -10, "y": 64, "z": 10 } },
+        { "type": "observe", "description": "Examine the demonstration farm — notice the tilled soil near water, the crops at different growth stages, and the animal pen" },
+        { "type": "build_block", "description": "Use a hoe to till a 9×9 plot of dirt. Place a water source in the center block for maximum hydration" },
+        { "type": "build_block", "description": "Plant wheat seeds in the tilled soil — they'll grow faster near water! Hold seeds and right-click the dirt" },
+        { "type": "build_block", "description": "Build a simple animal pen: fence in a 5×5 area, add a gate, and put 2 cows inside with some wheat" },
+        { "type": "build_block", "description": "Feed wheat to both cows to breed them — a baby cow will appear! Heart particles mean it worked 💕" },
+        { "type": "complete_challenge", "description": "Expand your farm! Add a carrot patch, a beetroot section, and set up a composter. You're a real farmer now! 🌾" }
+      ],
+      "quiz": [
+        {
+          "question": "How close does farmland need to be to water to stay hydrated?",
+          "type": "multiple_choice",
+          "options": ["1 block", "4 blocks", "8 blocks", "16 blocks"],
+          "answer": "4 blocks",
+          "explanation": "Water hydrates farmland up to 4 blocks away (Manhattan distance). That's why a single water block in the center of a 9×9 farm keeps all 80 plots hydrated!"
+        },
+        {
+          "question": "What happens if you jump on fully-grown wheat?",
+          "type": "open_ended",
+          "answer": ["breaks", "trample", "destroy", "crush"],
+          "explanation": "Jumping on farmland (or dropping on it from height) can trample it — turning it back to dirt and destroying the crop! Be careful around your farms."
+        },
+        {
+          "question": "What do you feed cows to breed them?",
+          "type": "multiple_choice",
+          "options": ["Seeds", "Carrots", "Wheat", "Bone meal"],
+          "answer": "Wheat",
+          "explanation": "Cows, sheep, and mooshrooms all eat wheat for breeding. Pigs eat carrots, potatoes, or beetroots. Chickens eat any seeds!"
+        },
+        {
+          "question": "Why is farming better than hunting for food?",
+          "type": "open_ended",
+          "answer": ["reliable", "renewable", "consistent", "always", "infinite"],
+          "explanation": "Farming is reliable and renewable — crops grow back, animals can be bred infinitely. Hunting depends on finding animals, which may not always be around, especially at night."
+        }
+      ]
+    }
+  ]
+}
