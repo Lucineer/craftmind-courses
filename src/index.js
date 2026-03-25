@@ -25,6 +25,37 @@ import { TeachingStyleManager } from './teaching-styles.js';
 import { Curriculum } from './curriculum.js';
 import { SkillTree } from './skill-tree.js';
 import { DiscoveryZone, discoveryFromStep } from './discovery.js';
+import { SkillTree } from './skill-tree.js';
+import { SpacedRepetition } from './spaced-repetition.js';
+import { PeerLearning } from './peer-learning.js';
+import { AdaptiveDifficulty } from './adaptive.js';
+
+export { Course } from './course.js';
+export { NPCTeacher } from './npc-teacher.js';
+export { NPCClassmate } from './npc-classmate.js';
+export { Progress } from './progress.js';
+export { WorldBuilder } from './world-builder.js';
+export { Quiz } from './quiz.js';
+export { AchievementSystem } from './achievements.js';
+export { TeachingStyleManager } from './teaching-styles.js';
+export { Curriculum } from './curriculum.js';
+export { SkillTree } from './skill-tree.js';
+export { DiscoveryZone, discoveryFromStep } from './discovery.js';
+export { SpacedRepetition } from './spaced-repetition.js';
+export { PeerLearning } from './peer-learning.js';
+export { AdaptiveDifficulty } from './adaptive.js';
+
+/**
+ * Register courses features with CraftMind Core.
+ * @param {object} core - Core instance with registerPlugin()
+ */
+export function registerWithCore(core) {
+  core.registerPlugin('courses', {
+    name: 'CraftMind Courses',
+    version: '1.0.0',
+    modules: { Course, NPCTeacher, Progress, WorldBuilder, Curriculum, SkillTree, Quiz },
+  });
+}
 
 async function main() {
   const args = process.argv.slice(2);
