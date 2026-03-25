@@ -45,8 +45,10 @@ export class NPCClassmate {
   /**
    * @param {import('mineflayer').Bot} bot
    * @param {"curious"|"competitive"|"struggling"} type
+   * @param {object} [opts]
+   * @param {import('./peer-learning.js').PeerLearningSystem} [opts.peerLearning]
    */
-  constructor(bot, type) {
+  constructor(bot, type, opts = {}) {
     this.bot = bot;
     this.type = type;
     const p = PERSONALITY[type];
@@ -55,6 +57,9 @@ export class NPCClassmate {
     this.profile = p;
     this.chatHistory = [];
     this.lastAction = Date.now();
+    this.peerLearning = opts.peerLearning ?? null;
+    this.awaitingHelp = false;
+    this.helpTopic = null;
   }
 
   /** Send a chat message in character. */
@@ -113,6 +118,43 @@ export class NPCClassmate {
       if (studentCompleted) this.react('correct');
       else if (Math.random() < 0.3) this.observe('this concept');
     }
+  }
+
+  /**
+   * Ask the student for help (peer learning).
+   * Only works for "struggling" classmates on topics the student knows.
+   * @param {string} topic
+   * @param {string} question — what the classmate is confused about
+   */
+  askForHelp(topic, question) {
+    this.awaitingHelp = true;
+    this.helpTopic = topic;
+    this.chat(`Hey, um... I don't really get ${topic}. ${question} Can you help me? 😅`);
+  }
+
+  /**
+   * Process a student's explanation (peer learning).
+   * @param {string} explanation — student's chat message
+   * @returns {{accepted:boolean, feedback:string, quality:number}|null}
+   */
+  receiveHelp(explanation) {
+    if (!this.awaitingHelp || !this.peerLearning) return null;
+
+    const result = this.peerLearning.evaluateExplanation(this.helpTopic, explanation);
+    this.awaitingHelp = false;
+
+    if (result.quality >= 3) {
+      this.chat(`Oh! That actually makes sense now! Thanks! 🎉`);
+    } else if (result.quality >= 2) {
+      this.chat(`Hmm, sort of? Can you explain the WHY part again?`);
+      // Don't close the help request — let them try again
+      this.awaitingHelp = true;
+    } else {
+      this.chat(`I'm still confused 😅 Maybe try explaining it differently?`);
+      this.awaitingHelp = true;
+    }
+
+    return { accepted: result.quality >= 3, ...result };
   }
 }
 

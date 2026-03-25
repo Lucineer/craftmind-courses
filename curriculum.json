@@ -1,0 +1,109 @@
+{
+  "courses": [
+    {
+      "id": "redstone-basics",
+      "title": "Redstone Basics",
+      "courseFile": "courses/redstone-basics.json",
+      "difficulty": 1,
+      "prerequisites": [],
+      "requiredSkills": [],
+      "awardsSkills": ["redstone-torches", "redstone-dust", "repeaters", "pistons", "logic-gates"],
+      "realWorldConnections": [
+        "Redstone circuits teach boolean logic — the same logic that runs every computer",
+        "Signal strength decreasing over distance is like voltage drop in electrical wiring",
+        "Logic gates (AND, OR, NOT) are how CPUs make decisions — Minecraft is literally a computer",
+        "Pistons demonstrate mechanical advantage and energy conversion",
+        "Repeaters are like signal boosters in fiber optic cables"
+      ]
+    },
+    {
+      "id": "building-basics",
+      "title": "Building Basics",
+      "courseFile": "courses/building-basics.json",
+      "difficulty": 1,
+      "prerequisites": [],
+      "requiredSkills": [],
+      "awardsSkills": ["foundations", "wall-building", "roofing", "bridges", "landscaping"],
+      "realWorldConnections": [
+        "Block placement teaches spatial reasoning and 3D thinking",
+        "Roof angles relate to real architecture — steep roofs shed snow and rain",
+        "Bridge construction involves the same engineering principles as real bridges",
+        "Garden design connects to landscape architecture and urban planning",
+        "Material mixing teaches color theory and visual design"
+      ]
+    },
+    {
+      "id": "survival-101",
+      "title": "Survival 101",
+      "courseFile": "courses/survival-101.json",
+      "difficulty": 1,
+      "prerequisites": [],
+      "requiredSkills": [],
+      "awardsSkills": ["tool-crafting", "shelter-building", "combat-basics", "farming"],
+      "realWorldConnections": [
+        "Crafting recipes teach logical sequencing and resource management",
+        "Shelter building connects to real survival skills and architecture",
+        "Mob combat teaches situational awareness and risk assessment",
+        "Farming teaches patience, planning, and sustainable resource management",
+        "Light level calculations are essentially math applied to safety"
+      ]
+    },
+    {
+      "id": "advanced-redstone",
+      "title": "Advanced Redstone",
+      "courseFile": "courses/advanced-redstone.json",
+      "difficulty": 3,
+      "prerequisites": ["redstone-basics"],
+      "requiredSkills": ["logic-gates", "repeaters"],
+      "awardsSkills": ["flip-flops", "clocks", "pulse-circuits", "memory-cells"],
+      "realWorldConnections": [
+        "Flip-flops are actual computer memory cells — you're building RAM",
+        "Clock circuits pulse like heartbeats in electronics",
+        "Pulse logic is used in real digital circuits for timing and synchronization"
+      ]
+    },
+    {
+      "id": "redstone-computers",
+      "title": "Redstone Computers",
+      "courseFile": "courses/redstone-computers.json",
+      "difficulty": 5,
+      "prerequisites": ["advanced-redstone"],
+      "requiredSkills": ["flip-flops", "clocks", "memory-cells"],
+      "awardsSkills": ["binary-arithmetic", "instruction-sets", "cpu-design"],
+      "realWorldConnections": [
+        "You will literally build a working computer — this is how real CPUs work",
+        "Binary arithmetic is the foundation of all modern computing",
+        "Instruction sets are how software talks to hardware"
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "id": "redstone-engineer",
+      "title": "Redstone Engineer",
+      "path": "From torch to computer — master redstone engineering",
+      "courseIds": ["redstone-basics", "advanced-redstone", "redstone-computers"],
+      "prerequisites": [],
+      "description": "Complete path from basic redstone to building your own computer",
+      "estimatedHours": 8
+    },
+    {
+      "id": "master-builder",
+      "title": "Master Builder",
+      "path": "From dirt hut to architectural marvel",
+      "courseIds": ["building-basics"],
+      "prerequisites": [],
+      "description": "Learn to build beautiful structures",
+      "estimatedHours": 3
+    },
+    {
+      "id": "survival-expert",
+      "title": "Survival Expert",
+      "path": "Thrive, don't just survive",
+      "courseIds": ["survival-101", "redstone-basics"],
+      "prerequisites": [],
+      "description": "Master survival skills and add redstone automation",
+      "estimatedHours": 6
+    }
+  ]
+}

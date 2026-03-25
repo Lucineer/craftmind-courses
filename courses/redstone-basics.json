@@ -17,7 +17,24 @@
         { "type": "observe", "description": "Look at the demo setup — a redstone torch powering a lamp" },
         { "type": "build_block", "description": "Place a redstone torch on the marked block to power the lamp next to it" },
         { "type": "interact_npc", "description": "Talk to ProfBlock to explain what you observed about the torch signal" },
-        { "type": "solve_puzzle", "description": "Power all 3 lamps using only 2 redstone torches — find the right positions!" }
+        { "type": "solve_puzzle", "description": "Power all 3 lamps using only 2 redstone torches — find the right positions!" },
+        {
+          "type": "discovery",
+          "description": "Discovery Zone: Figure out how to make a redstone torch toggle — power it and unpower it rapidly using a lever!",
+          "discovery": {
+            "id": "rb-torch-toggle",
+            "title": "The Torch Toggle Mystery",
+            "description": "You have a lever and a redstone torch. Figure out: what happens if you flick the lever on and off really fast? Try it!",
+            "solution": "The torch burns out and turns into a regular item. This is a real mechanic in Minecraft!",
+            "hints": [
+              "Try placing a redstone torch on a block, then power that block with a lever.",
+              "What happens when you flip the lever on? What about off?",
+              "Try flipping it on and off rapidly — like, really fast. Something unexpected might happen!"
+            ],
+            "concepts": ["redstone-torches"],
+            "realWorldInsight": "Real electronic components can burn out too! Overvoltage or rapid switching can damage transistors and capacitors, just like the redstone torch burns out."
+          }
+        }
       ],
       "quiz": [
         {
@@ -38,7 +55,8 @@
           "question": "What happens when a block already powered by redstone has a torch placed on it?",
           "type": "open_ended",
           "answer": ["burns out", "turns off", "goes out", "pops off"],
-          "explanation": "A redstone torch on a powered block will turn off (and eventually burn out if toggled rapidly). This is the key to NOT gates!"
+          "explanation": "A redstone torch on a powered block will turn off (and eventually burn out if toggled rapidly). This is the key to NOT gates!",
+          "commonMistake": "People often think a torch ON a powered block gets STRONGER — actually the opposite happens! The power turns it off."
         }
       ]
     },
@@ -146,7 +164,24 @@
         { "type": "observe", "description": "Study the 3 demo gates (NOT, AND, OR) — flip their input levers and watch the output lamps" },
         { "type": "build_block", "description": "Build a NOT gate: place a block, put a torch on it, wire input to the block — torch output is inverted!" },
         { "type": "solve_puzzle", "description": "Build an AND gate: both input levers must be ON for the lamp to light. Use 2 torches and 1 dust line." },
-        { "type": "complete_challenge", "description": "BONUS: Combine NOT + AND to make a NAND gate, then use it to open the exit door! Only 1 correct lever combo works!" }
+        { "type": "complete_challenge", "description": "BONUS: Combine NOT + AND to make a NAND gate, then use it to open the exit door! Only 1 correct lever combo works!" },
+        {
+          "type": "discovery",
+          "description": "Discovery Zone: Build an XOR gate using only torches and dust. XOR means 'one or the other, but not both'.",
+          "discovery": {
+            "id": "rb-xor-discovery",
+            "title": "The XOR Challenge",
+            "description": "Can you build a circuit where the lamp lights when EXACTLY ONE input is on? Not zero, not both — just one! This is an XOR gate.",
+            "solution": "An XOR gate can be built by combining AND, OR, and NOT gates: (A OR B) AND NOT (A AND B). Or more simply in Minecraft, by connecting two torch outputs together.",
+            "hints": [
+              "Think about what you've learned: AND (both), OR (any), NOT (opposite). Can you combine them?",
+              "XOR = (A OR B) AND NOT (A AND B). Try building each part separately first.",
+              "Here's a direct Minecraft approach: Place two blocks side by side. Put a torch on each. Wire input A to block A and input B to block B. The torch outputs feed into a single dust line that goes to the lamp."
+            ],
+            "concepts": ["redstone-torches", "redstone-dust", "logic-gates"],
+            "realWorldInsight": "XOR gates are fundamental to addition in computers! Your CPU adds numbers using XOR gates for the sum bits. You just built part of a calculator! 🧮"
+          }
+        }
       ],
       "quiz": [
         {
@@ -154,7 +189,8 @@
           "type": "multiple_choice",
           "options": ["Output is ON", "Output is OFF", "Output flickers", "The torch explodes"],
           "answer": "Output is OFF",
-          "explanation": "A NOT gate inverts the signal. When you power the block a torch is on, the torch turns OFF — the output is the opposite of the input."
+          "explanation": "A NOT gate inverts the signal. When you power the block a torch is on, the torch turns OFF — the output is the opposite of the input.",
+          "commonMistake": "Students often expect the output to be the same as the input. Remember: redstone torches turn OFF when their block is powered — that's the inversion!"
         },
         {
           "question": "For an AND gate, how many inputs must be ON for the output to be ON?",

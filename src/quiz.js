@@ -16,15 +16,25 @@ export class Quiz {
   /**
    * @param {QuizQuestion[]} questions
    * @param {import('mineflayer').Bot} bot
+   * @param {object} [opts]
+   * @param {QuizQuestion[]} [opts.reviewQuestions] — spaced repetition review questions from earlier lessons
+   * @param {string} [opts.topic] — topic for adaptive engine tracking
+   * @param {import('./progress.js').Progress} [opts.progress] — for tracking confidence
    */
-  constructor(questions, bot) {
-    this.questions = questions;
+  constructor(questions, bot, opts = {}) {
     this.bot = bot;
-    this.currentIndex = 0;
-    this.score = 0;
-    this.totalPoints = questions.reduce((sum, q) => sum + (q.points ?? 1), 0);
+    this.topic = opts.topic ?? '';
+    this.progress = opts.progress ?? null;
     this.awaitingAnswer = false;
     this._answerResolver = null;
+
+    // Inject spaced repetition review questions at the start if any are due
+    const reviewQuestions = opts.reviewQuestions ?? [];
+    this.questions = [...reviewQuestions, ...questions];
+    this.reviewCount = reviewQuestions.length;
+    this.currentIndex = 0;
+    this.score = 0;
+    this.totalPoints = this.questions.reduce((sum, q) => sum + (q.points ?? 1), 0);
   }
 
   /** @returns {QuizQuestion|null} */
@@ -45,7 +55,12 @@ export class Quiz {
     const q = this.currentQuestion;
     if (!q) return null;
 
-    this.bot.chat(`📝 Q${this.currentIndex + 1}/${this.questions.length}: ${q.question}`);
+    const isReview = this.currentIndex < this.reviewCount;
+    const label = isReview
+      ? `🔄 REVIEW Q${this.currentIndex + 1}: ${q.question}`
+      : `📝 Q${this.currentIndex - this.reviewCount + 1}/${this.questions.length - this.reviewCount}: ${q.question}`;
+
+    this.bot.chat(label);
     if (q.type === 'multiple_choice' && q.options) {
       q.options.forEach((opt, i) => this.bot.chat(`  ${String.fromCharCode(65 + i)}) ${opt}`));
     }
@@ -67,15 +82,26 @@ export class Quiz {
     this.awaitingAnswer = false;
 
     const correct = this._check(message, q);
+    const isReview = this.currentIndex < this.reviewCount;
     if (correct) {
       this.score += q.points ?? 1;
       this.bot.chat(`✅ Correct! ${q.explanation}`);
     } else {
-      this.bot.chat(`❌ Not quite! The answer: ${Array.isArray(q.answer) ? q.answer.join(', ') : q.answer}`);
+      const answer = Array.isArray(q.answer) ? q.answer.join(', ') : q.answer;
+      this.bot.chat(`❌ Not quite! The answer: ${answer}`);
       this.bot.chat(`💡 ${q.explanation}`);
+      // Give extra context on WHY wrong answers are common misconceptions
+      if (q.commonMistake) {
+        this.bot.chat(`⚠️ Common mistake: ${q.commonMistake}`);
+      }
     }
 
-    const result = { correct, score: this.score, explanation: q.explanation };
+    // Track for spaced repetition
+    if (this.progress && this.topic) {
+      this.progress.recordReview(this.topic, correct ? 5 : 1);
+    }
+
+    const result = { correct, score: this.score, explanation: q.explanation, isReview };
     const resolver = this._answerResolver;
     this._answerResolver = null;
     this.currentIndex++;
@@ -98,14 +124,17 @@ export class Quiz {
     return answers.some(a => input.includes(a) || a.includes(input));
   }
 
-  /** Present final score. */
+  /** Present final score with detailed breakdown. */
   showResults() {
     const pct = this.totalPoints ? Math.round((this.score / this.totalPoints) * 100) : 0;
     this.bot.chat(`🏁 Quiz complete! Score: ${this.score}/${this.totalPoints} (${pct}%)`);
-    if (pct === 100) this.bot.chat('🌟 Perfect score! You\'re a genius!');
-    else if (pct >= 80) this.bot.chat('⭐ Great job! Almost perfect!');
-    else if (pct >= 60) this.bot.chat('👍 Not bad! Review the ones you missed.');
-    else this.bot.chat('📚 Keep studying — you\'ll get there!');
+    if (this.reviewCount > 0) {
+      this.bot.chat(`📋 Review questions: ${this.reviewCount} (from earlier lessons — keep practicing!)`);
+    }
+    if (pct === 100) this.bot.chat('🌟 Perfect score! You\'ve truly mastered this topic!');
+    else if (pct >= 80) this.bot.chat('⭐ Great job! Almost perfect — review the one you missed.');
+    else if (pct >= 60) this.bot.chat('👍 Not bad! The concepts are starting to click. A quick review will help.');
+    else this.bot.chat('📚 This topic needs more practice — don\'t worry, we\'ll revisit it soon!');
   }
 }
 

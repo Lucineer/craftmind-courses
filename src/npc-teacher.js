@@ -38,12 +38,14 @@ export class NPCTeacher {
    * @param {object} [opts]
    * @param {string} [opts.name] — in-game username (default "ProfBlock")
    * @param {string} [opts.subject] — e.g. "Redstone Engineering"
+   * @param {import('./teaching-styles.js').TeachingStyleManager} [opts.styleManager]
    */
   constructor(bot, opts = {}) {
     this.bot = bot;
     this.name = opts.name ?? 'ProfBlock';
     this.subject = opts.subject ?? 'Minecraft';
     this.apiKey = process.env.ZAI_API_KEY ?? null;
+    this.styleManager = opts.styleManager ?? null;
     /** @type {string[]} */
     this.chatHistory = [];
   }
@@ -77,9 +79,11 @@ export class NPCTeacher {
   /** @private */
   async _llmSay(context, extra) {
     const recentHistory = this.chatHistory.slice(-20).join('\n');
+    const stylePrompt = this.styleManager?.getPromptAddition() ?? '';
     const systemPrompt = `You are ${this.name}, a fun and encouraging Minecraft teacher specializing in ${this.subject}.
 You chat in Minecraft so keep messages short (1-2 sentences max). Use occasional emojis.
 You are NOT a lecturing professor — you're like a cool tutor who loves helping students learn.
+${stylePrompt}
 Context: ${context}${extra ? '\nExtra info: ' + extra : ''}`;
 
     const resp = await fetch(LLM_URL, {
@@ -125,6 +129,29 @@ Context: ${context}${extra ? '\nExtra info: ' + extra : ''}`;
     if (this.apiKey) {
       await this._llmSay(`Student chat: "${message}"`, '');
     }
+  }
+
+  /**
+   * Deliver a "real-world insight" moment — connecting Minecraft to real subjects.
+   * These are the "aha!" moments that make learning stick.
+   * @param {string} concept — the Minecraft concept
+   * @param {string} realWorld — the real-world connection
+   */
+  realWorldInsight(concept, realWorld) {
+    this.chat('');
+    this.chat('🌐 Real World Insight:');
+    this.chat(`Did you know that ${concept} in Minecraft works just like ${realWorld}?`);
+    this.chat('Understanding these connections makes you better at BOTH! 🧠');
+    this.chat('');
+  }
+
+  /**
+   * Deliver adaptive feedback based on student performance.
+   * @param {{action:string, message:string, reason:string}} adaptation
+   */
+  adaptiveFeedback(adaptation) {
+    if (adaptation.action === 'continue') return; // no message needed
+    this.chat(adaptation.message);
   }
 }
 
