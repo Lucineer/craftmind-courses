@@ -15,10 +15,10 @@ import { AchievementSystem } from './achievements.js';
  */
 async function main() {
   const args = process.argv.slice(2);
-  const host = args[args.indexOf('--host') + 1] ?? 'localhost';
-  const port = parseInt(args[args.indexOf('--port') + 1] ?? '25565', 10);
-  const coursePath = args[args.indexOf('--course') + 1] ?? 'courses/redstone-basics.json';
-  const teacherName = args[args.indexOf('--teacher-name') + 1] ?? 'ProfBlock';
+  const host = args[args.indexOf('--host') + 1] ?? process.env.MC_HOST ?? 'localhost';
+  const port = parseInt(args[args.indexOf('--port') + 1] ?? process.env.MC_PORT ?? '25565', 10);
+  const coursePath = args[args.indexOf('--course') + 1] ?? process.env.COURSE_FILE ?? 'courses/redstone-basics.json';
+  const teacherName = args[args.indexOf('--teacher-name') + 1] ?? process.env.TEACHER_NAME ?? 'ProfBlock';
 
   console.log(`📚 CraftMind Courses — Loading course from ${coursePath}`);
 
@@ -34,13 +34,14 @@ async function main() {
     // Connect teacher
     const teacherBot = mineflayer.createBot({ host, port, username: teacherName, hideErrors: false });
     teacherBot.once('spawn', () => {
-      console.log(`👨‍🏫 Teacher "${teacherName}" spawned!`);
+      console.log(`👨\u200D🏫 Teacher "${teacherName}" spawned!`);
     });
 
-    // Connect classmates
+    // Connect classmates with proper names
     const classmateTypes = ['curious', 'competitive', 'struggling'];
+    const classmateNames = { curious: 'Alex', competitive: 'Sam', struggling: 'Jordan' };
     const classmates = classmateTypes.map((type) => {
-      const bot = mineflayer.createBot({ host, port, username: NPCClassmate.prototype?.name ?? `CM_${type}`, hideErrors: false });
+      const bot = mineflayer.createBot({ host, port, username: `CM_${classmateNames[type]}`, hideErrors: false });
       return { type, bot };
     });
 
@@ -58,12 +59,19 @@ async function main() {
     const achievements = new AchievementSystem(progress);
     const worldBuilder = new WorldBuilder(studentBot);
 
+    // Track lesson start times for achievement checks
+    /** @type {Map<string, number>} lessonId → start timestamp */
+    const lessonStartTimes = new Map();
+
     // Greet
     await teacher.say('welcome');
     for (const cm of classmateInstances) cm.react('new_topic');
 
     // Run through course lessons
     for (const lesson of course.orderedLessons) {
+      lesson.reset();
+      lessonStartTimes.set(lesson.id, Date.now());
+
       teacherBot.chat(`\n📖 Lesson: ${lesson.title}`);
       teacherBot.chat(lesson.description);
       teacherBot.chat(`Objectives: ${lesson.objectives.join(', ')}`);
@@ -74,8 +82,11 @@ async function main() {
       }
 
       // Walk through steps
-      for (const step of lesson.steps) {
-        teacherBot.chat(`\n📌 Step: ${step.description}`);
+      while (!lesson.completed) {
+        const step = lesson.currentStep;
+        if (!step) break;
+
+        teacherBot.chat(`\n📌 Step ${lesson.currentStepIndex + 1}/${lesson.steps.length}: ${step.description}`);
         if (step.type === 'observe') {
           teacherBot.chat('👀 Take a look around and observe what\'s happening...');
           await sleep(5000);
@@ -83,6 +94,8 @@ async function main() {
           teacherBot.chat(`🧭 Head to: ${step.target.x}, ${step.target.y}, ${step.target.z}`);
         } else if (step.type === 'build_block') {
           teacherBot.chat('🔨 Time to build! Follow the instructions.');
+        } else if (step.type === 'interact_npc') {
+          teacherBot.chat('💬 Come talk to me when you\'re ready to discuss what you observed!');
         } else if (step.type === 'solve_puzzle' || step.type === 'complete_challenge') {
           teacherBot.chat('🧩 Puzzle time! Give it your best shot!');
         }
@@ -94,34 +107,50 @@ async function main() {
 
         // Wait for student to proceed (chat "done" or "next")
         await waitForChat(studentBot, ['done', 'next', 'ready', 'ok']);
-        lesson.advanceStep();
+        const isNowComplete = lesson.advanceStep();
         await teacher.say('celebrate');
       }
 
       // Quiz
+      let quizPerfect = false;
       if (lesson.quiz?.length) {
         teacherBot.chat('\n📝 Time for a quiz!');
         const quiz = new Quiz(lesson.quiz, teacherBot);
+
+        // Wire up chat handler for quiz answers
+        const quizHandler = (username, message) => {
+          quiz.processAnswer(message);
+        };
+        studentBot.on('chat', quizHandler);
+
         while (!quiz.isComplete) {
           const result = await quiz.askCurrent();
           if (!result) break;
-          await waitForChat(studentBot, []); // consume one message
-          // answer is processed by quiz.processAnswer via chat handler
+          // Wait briefly for the answer to be processed via chat handler
+          await sleep(15000); // 15s timeout per question
+          if (quiz.awaitingAnswer) {
+            // Auto-advance if no answer
+            quiz.processAnswer('');
+          }
         }
+        studentBot.off('chat', quizHandler);
         quiz.showResults();
+        quizPerfect = quiz.score === quiz.totalPoints;
         progress.recordQuiz(lesson.id, quiz.score);
       }
 
-      // Record completion
-      progress.completeLesson(lesson.id, null, 0);
-      const startTime = Date.now();
+      // Record completion with actual time
+      const lessonTime = (Date.now() - (lessonStartTimes.get(lesson.id) ?? Date.now())) / 1000;
+      progress.completeLesson(lesson.id, null, lessonTime);
 
       // Check achievements
+      const completedCount = [...progress.lessons.values()].filter(l => l.completed).length;
       const ctx = {
-        completedLessons: [...progress.lessons.values()].filter(l => l.completed).length,
-        perfectQuiz: false,
-        lastLessonTime: (Date.now() - startTime) / 1000,
-        streak: [...progress.lessons.values()].filter(l => l.completed).length,
+        completedLessons: completedCount,
+        perfectQuiz: quizPerfect,
+        lastTopic: course.id,
+        lastLessonTime: lessonTime,
+        streak: completedCount,
         questionsAsked: 0,
         helpedClassmate: false,
         courseComplete: course.orderedLessons.every(l => progress.getLesson(l.id)?.completed),
@@ -137,6 +166,12 @@ async function main() {
   });
 
   // Helper: wait for specific chat messages
+  /**
+   * Wait for the student bot to receive a chat message matching one of the triggers.
+   * @param {import('mineflayer').Bot} bot
+   * @param {string[]} triggers — if empty, matches any message
+   * @returns {Promise<string>} the matched message
+   */
   function waitForChat(bot, triggers) {
     return new Promise((resolve) => {
       const handler = (username, message) => {
@@ -152,6 +187,11 @@ async function main() {
 }
 
 /** Build a simple world from a lesson template. */
+/**
+ * Build learning environment structures from a lesson's worldTemplate definition.
+ * @param {WorldBuilder} builder
+ * @param {object} template — worldTemplate from lesson JSON
+ */
 async function buildWorldFromTemplate(builder, template) {
   if (template.room) {
     const { Vec3 } = await import('vec3');
@@ -165,6 +205,7 @@ async function buildWorldFromTemplate(builder, template) {
   }
 }
 
+/** @param {number} ms @returns {Promise<void>} */
 function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
