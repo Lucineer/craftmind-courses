@@ -6,3 +6,4 @@ progress/
 progress/\ntmp/
 node_modules/
 tmp/
+assets/generated/
