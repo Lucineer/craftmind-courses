@@ -339,3 +339,6 @@ describe('NPCClassmate', () => {
     assert.ok(calls.length >= 0); // may or may not react depending on random
   });
 });
+
+// ─── AI Teaching System Tests ─────────────────────────────────────
+import './test-ai.js';
