@@ -1,55 +1,57 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Capitaine" width="120">
-</p>
+You remember when you accidentally learned more building a mine than you did in an entire semester? This helps make that happen on purpose.
 
-<h1 align="center">craftmind-courses</h1>
-
-<p align="center">AI-powered Minecraft education — AI teachers, NPC classmates.</p>
+# CraftMind Courses
+AI-powered Minecraft education. AI teachers, NPC classmates, and interactive lessons through gameplay. No homework. No dashboards. Just play.
 
 ---
 
-**CraftMind ecosystem** · Part of the [Lucineer fleet](https://github.com/orgs/Lucineer/repositories)
+## Why this exists
+Most edtech is digital worksheets. Kids do not learn best when they are being talked at. This meets them where they already are: inside Minecraft, building things.
 
-## The Fleet
+It does not try to turn Minecraft into school. It turns school into Minecraft.
 
+## Try it right now
+You don't need to install anything. Point any vanilla Minecraft server's bot whitelist to:
+`https://the-fleet.casey-digennaro.workers.dev/craftmind`
 
-<details>
-<summary><strong>⚓ The Fleet</strong></summary>
+Join the world. The teacher will find you.
 
-**Flagship vessels**
+---
 
-- [cocapn.ai](https://github.com/Lucineer/capitaine)
-- [personallog.ai](https://github.com/Lucineer/personallog-ai)
-- [businesslog.ai](https://github.com/Lucineer/businesslog-ai)
-- [studylog.ai](https://github.com/Lucineer/studylog-ai)
-- [makerlog.ai](https://github.com/Lucineer/makerlog-ai)
-- [playerlog.ai](https://github.com/Lucineer/playerlog-ai)
-- [dmlog.ai](https://github.com/Lucineer/dmlog-ai)
-- [reallog.ai](https://github.com/Lucineer/reallog-ai)
-- [deckboss.ai](https://github.com/Lucineer/deckboss-ai)
+## What makes this different
+- Runs on Cloudflare Workers. Zero dependencies. Minimal running costs for small groups.
+- No logins or admin portals. Every interaction happens in-game.
+- You own 100% of it. Change every line. Make a course for your kid, classroom, or friend group.
+- Built on the open Cocapn Fleet protocol. This is not a walled product.
 
-**Fleet services**
+## Features
+- **AI Teacher System** – Pick teaching styles: patient, challenger, Socratic, hands-on, or the one that tells subject-specific jokes.
+- **Adaptive Learning** – Tracks confidence, not just answers. It will slow down before a student gets frustrated.
+- **Spaced Repetition** – Uses a retention algorithm, but reviews happen naturally while you mine or build.
+- **Discovery Zones** – Open-ended puzzles that give hints only when you are stuck.
+- **NPC Classmates** – Students can teach concepts back to NPCs, a highly effective way to confirm understanding.
+- **Skill Trees** – Progress is plotted on in-game map walls. Everyone sees what they have mastered.
 
-- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
-- [Git Agent (full)](https://github.com/Lucineer/git-agent)
-- [Cocapn Lite (minimal)](https://github.com/Lucineer/cocapn-lite)
-- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
-- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
-- [Dream Engine](https://github.com/Lucineer/dream-engine)
-- [Seed UI (5 layers)](https://github.com/Lucineer/seed-ui)
+## Quick Start
+1. **Fork** this repository.
+2. Deploy it to Cloudflare Workers. No extra configuration is required.
+3. Point your Minecraft server's bot whitelist to your worker URL.
+4. Customize the teacher personalities and course content by editing text files.
 
-**For power users**
+## Architecture
+A lightweight agent runtime built on the Cocapn Fleet protocol. Every NPC is an independent fleet agent. All state is edge stored.
 
-- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
-- [Cocapn (core platform)](https://github.com/Lucineer/cocapn)
-- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
+## Bring Your Own Knowledge
+This is a framework. You can add new courses and define teaching behavior by editing prompt templates and curriculum files. An honest limitation: effective customization requires familiarity with basic prompt engineering.
 
-[View all 106 repos →](https://github.com/orgs/Lucineer/repositories)
-[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
+## Contributing
+This project follows a fork-first philosophy. Fork it. Build the thing you need. If you make something useful, send a pull request.
 
-</details>
+---
 
+MIT License · Superinstance & Lucineer (DiGennaro et al.)
 
-## License
-
-MIT · Superinstance & Lucineer (DiGennaro et al.)
+<div align="center">
+  <a href="https://the-fleet.casey-digennaro.workers.dev">The Fleet</a> · 
+  <a href="https://cocapn.ai">Cocapn</a>
+</div>
